@@ -1,13 +1,20 @@
-import { SET_PRODUCTS, REMOVE_PRODUCT, ADD_PRODUCT } from "./mutation-types";
+import {
+  REMOVE_PRODUCT,
+  ADD_PRODUCT,
+  SET_PRODUCT_QUANTITY,
+} from "./mutation-types";
 
-export function removeAll({ commit }) {
-  commit(SET_PRODUCTS, []);
+export function removeProduct({ commit }, productUid) {
+  commit(REMOVE_PRODUCT, productUid);
 }
 
-export function removeProduct({ commit }, id) {
-  commit(REMOVE_PRODUCT, id);
+export function addProduct({ state, commit }, productUid) {
+  const quantity = state.products[productUid];
+  if (quantity) {
+    commit(SET_PRODUCT_QUANTITY, { productUid, quantity: quantity + 1 });
+  } else commit(ADD_PRODUCT, productUid);
 }
 
-export function addProduct({ commit }, id) {
-  commit(ADD_PRODUCT, id);
+export function setQuantity({ commit }, { productUid, quantity }) {
+  commit(SET_PRODUCT_QUANTITY, { productUid, quantity });
 }

@@ -4,7 +4,10 @@
       <router-link :to="ROUTES.HOME.path">Главная</router-link> |
       <router-link :to="ROUTES.PRODUCTS.path">Список товаров</router-link> |
       <router-link :to="ROUTES.FAVOURITES.path">❤️ Избранное</router-link> |
-      <router-link :to="ROUTES.CART.path">🗑 Корзина</router-link>
+      <router-link :to="ROUTES.CART.path">
+        <span>🛒 Корзина</span>
+        <span v-show="products.length"> ({{ products.length }})</span>
+      </router-link>
     </div>
     <router-view />
   </div>
@@ -12,6 +15,7 @@
 
 <script>
 import ROUTES from "@/router/routes";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -20,6 +24,7 @@ export default {
       ROUTES,
     };
   },
+  computed: mapGetters("cart", ["products"]),
   provide() {
     return {
       ROUTES: this.ROUTES,

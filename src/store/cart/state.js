@@ -1,5 +1,5 @@
 const STATE = {
-  products: [],
+  products: {},
 };
 
 export default STATE;

@@ -1,4 +1,4 @@
-const API_URL = "https://random-data-api.com/api/food/random_food?size=5";
+const API_URL = "https://random-data-api.com/api/food/random_food?size=30";
 const IMG_COUNT = 12;
 const MAX_PRICE = 100;
 
@@ -8,12 +8,16 @@ const randomImage = () => `${Math.ceil(Math.random() * IMG_COUNT)}.webp`;
 export async function getProducts() {
   const rawProducts = await fetch(API_URL);
   const products = await rawProducts.json();
-  return products.map((product) => ({
-    ...product,
-    price: randomPrice(),
-    image: randomImage(),
-    name: product.dish,
-    description: product.description.slice(0, 100),
-    inFavourites: false,
-  }));
+  return Object.fromEntries(
+    products.map((product) => [
+      product.uid,
+      {
+        ...product,
+        price: randomPrice(),
+        image: randomImage(),
+        name: product.dish,
+        description: product.description.slice(0, 100),
+      },
+    ])
+  );
 }

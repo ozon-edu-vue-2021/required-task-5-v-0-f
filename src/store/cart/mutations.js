@@ -1,13 +1,18 @@
-import { SET_PRODUCTS, ADD_PRODUCT, REMOVE_PRODUCT } from "./mutation-types";
+import {
+  ADD_PRODUCT,
+  REMOVE_PRODUCT,
+  SET_PRODUCT_QUANTITY,
+} from "./mutation-types";
 
 export default {
-  [SET_PRODUCTS](state, products) {
-    state.products = products;
+  [ADD_PRODUCT](state, productUid) {
+    state.products = { ...state.products, [productUid]: 1 };
   },
-  [ADD_PRODUCT](state, product) {
-    state.products = [ ...state.products, product];
+  [SET_PRODUCT_QUANTITY](state, { productUid, quantity }) {
+    state.products = { ...state.products, [productUid]: quantity };
   },
-  [REMOVE_PRODUCT](state, id) {
-    state.products = state.products.filter((product) => product.uid !== id);
+  [REMOVE_PRODUCT](state, productUid) {
+    delete state.products[productUid];
+    state.products = { ...state.products }; // for reactivity
   },
 };

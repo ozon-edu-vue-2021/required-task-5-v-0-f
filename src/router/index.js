@@ -31,6 +31,7 @@ const routesConfig = [
     path: ROUTES.FAVOURITES.path,
     name: ROUTES.FAVOURITES.name,
     component: Products,
+    props: { showFavourites: true },
   },
   {
     path: "*",
